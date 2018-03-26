@@ -6,11 +6,18 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Labeled;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
  
 public class FastClicker extends Application 
 {
+	private boolean scoring;
+	private int score;
+	private Long timeStep;
+	Labeled txt;
+	
     public static void main(String[] args) 
     {
         launch(args);
@@ -24,15 +31,46 @@ public class FastClicker extends Application
         btn.setText("Click");
         btn.setOnAction(new EventHandler<ActionEvent>() 
         {
-        	int i = 0;
 
             @Override
             public void handle(ActionEvent event) 
             {
-                i++;
-                System.out.println(i);
+               if(scoring)
+               {
+            	   score++;
+               }
+               else
+               {
+            	   score--;
+               }
             }
         });
+        
+        timeStep = System.nanoTime() + 1000000000L;
+        new AnimationTimer()
+        {
+
+			@Override
+			public void handle(long now) 
+			{
+				if(now > timeStep)
+				{
+					timeStep = now + 1000000000L;
+					scoring = !scoring;
+				}
+				if(!scoring)
+				{
+					btn.setText("Don't Click");
+				}
+				else
+				{
+					btn.setText("Click Me!");
+				}
+				
+				txt.setText("Score:" + Integer.toString(score));
+			}
+        	
+        }.start();
 
         StackPane root = new StackPane();
         root.getChildren().add(btn);
