@@ -31,43 +31,37 @@ public class FastClicker extends Application
         btn.setText("Click");
         btn.setOnAction(new EventHandler<ActionEvent>() 
         {
-
             @Override
             public void handle(ActionEvent event) 
             {
-               if(scoring)
+               if(!scoring)
                {
             	   score++;
-               }
-               else
-               {
-            	   score--;
                }
             }
         });
         
-        timeStep = System.nanoTime() + 1000000000L;
+        timeStep = System.nanoTime() + 10000000000L;
         new AnimationTimer()
         {
-
 			@Override
 			public void handle(long now) 
 			{
 				if(now > timeStep)
 				{
-					timeStep = now + 1000000000L;
+					timeStep = now + 10000000000L;
 					scoring = !scoring;
 				}
 				if(!scoring)
 				{
-					btn.setText("Don't Click");
+					btn.setText("Click Me!");
 				}
 				else
 				{
-					btn.setText("Click Me!");
+					btn.setText("Done");
+					System.out.println("Score:" + Integer.toString(score));
 				}
 				
-				txt.setText("Score:" + Integer.toString(score));
 			}
         	
         }.start();
