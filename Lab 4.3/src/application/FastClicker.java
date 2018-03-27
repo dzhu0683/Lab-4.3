@@ -58,8 +58,8 @@ public class FastClicker extends Application
 				}
 				else
 				{
-					btn.setText("Done");
-					System.out.println("Score:" + Integer.toString(score));
+					btn.setText("Score: " + Integer.toString(score));
+					
 				}
 				
 			}
